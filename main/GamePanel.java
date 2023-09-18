@@ -6,11 +6,15 @@ import java.awt.Dimension;
 import java.awt.Color; 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+
 import entity.Player;
 import tiles.TileManager;
 
 
 public class GamePanel extends JPanel implements Runnable{
+
+    Graphics2D g2;
 
     //Screen settings
     final int originalTileSize = 64;
@@ -23,6 +27,11 @@ public class GamePanel extends JPanel implements Runnable{
     public final int screenWidth = tileSize * maxScreenColumn;
     public final int screenHeight = tileSize * maxScreenRow;
 
+    int screenHeight2 = screenHeight;
+    int screenWidth2 = screenWidth;
+    BufferedImage tempScreen;
+
+    
     //World settings
     public final int maxWorldCol = 60;
     public final int maxWorldRow = 7;
@@ -35,8 +44,11 @@ public class GamePanel extends JPanel implements Runnable{
 
     //state
     public int gameState;
+    public final int titleState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
+    
+    
 
     Thread gameThread;
     KeyHandler KeyH = new KeyHandler(this);
@@ -55,11 +67,15 @@ public class GamePanel extends JPanel implements Runnable{
         this.setFocusable(true);
     }
 
+    
     public void setupGame(){
-        gameState = playState;
+        //gameState = titleState;
+        tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
+        g2 = (Graphics2D)tempScreen.getGraphics();
     }
 
     public void startGameThread(){
+        gameState = playState;
         gameThread = new Thread(this);
         gameThread.start();
     }
@@ -111,13 +127,14 @@ public class GamePanel extends JPanel implements Runnable{
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
-        tileM.draw(g2);
-
-        player.draw(g2);
-        
-        ui.setFps(showFps);
-        ui.draw(g2);
-
-        g2.dispose();
+        if(gameState == titleState){
+          
+        }else{
+            tileM.draw(g2);   
+            player.draw(g2);
+            ui.setFps(showFps);
+            ui.draw(g2);
+            g2.dispose();
         }
+    }
 }
