@@ -54,24 +54,20 @@ public class UI{
 
     private void loadPausedBackground(){
         try {
-            pausedBackground = ImageIO.read(getClass().getResourceAsStream("/Assets/tiles/Ground/Ground.png"));
+            pausedBackground = ImageIO.read(getClass().getResourceAsStream("/Assets/UI/PausedBackground/pausedBackground.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void drawPauseScreen( ){
-        String text = "Paused";
-        int x = getXforCenteredText(text);
+        System.out.println(gp.screenWidth);
+        loadPausedBackground();
+        int x = gp.screenWidth / 4;
+        int y = gp.screenHeight / 100;
+        System.out.println(y);
 
-        int y = gp.screenHeight/2;
-
-        g2.drawString(text, x, y);
-    }
-
-    public int getXforCenteredText(String text){
-        int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth() - 800;
-        int x = gp.screenHeight/2 - length/2;
-        return x;
+        g2.drawImage(pausedBackground,x,y,gp.screenHeight,gp.screenWidth/2,null);
+        
     }
 }
