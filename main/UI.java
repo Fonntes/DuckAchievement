@@ -14,7 +14,7 @@ public class UI{
     Graphics2D g2;
     Font arial_S30;
     int showFps;
-    BufferedImage pausedBackground;
+    BufferedImage pausedBackground, startButton;
 
     public UI(GamePanel gp){
         this.gp = gp;
@@ -55,6 +55,7 @@ public class UI{
     private void loadPausedBackground(){
         try {
             pausedBackground = ImageIO.read(getClass().getResourceAsStream("/Assets/UI/PausedBackground/pausedBackground.png"));
+            startButton = ImageIO.read(getClass().getResourceAsStream("/Assets/UI/PausedBackground/startButton.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -65,9 +66,9 @@ public class UI{
         loadPausedBackground();
         int x = gp.screenWidth / 4;
         int y = gp.screenHeight / 100;
-        System.out.println(y);
 
         g2.drawImage(pausedBackground,x,y,gp.screenHeight,gp.screenWidth/2,null);
+        g2.drawImage(startButton,x+255,y+200,256,256,null);
         
     }
 }
